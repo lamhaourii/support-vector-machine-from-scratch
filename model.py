@@ -56,8 +56,23 @@ def svm_objective(x, y, params, reg_lambda):
     mean_loss= np.mean(losses)
     return mean_loss + reg_lambda* (params['w'].T @ params['w'].T)
 
-# Step 7 - compute_gradients (not yet solved)
-# TODO: implement
+# Step 7 - compute_gradients
+import numpy as np
+
+def compute_gradients(x, y, params, reg_lambda):
+    """Return {'dw': ndarray shape (n_features,), 'db': float} = gradient of svm_objective."""
+    # TODO: compute the gradient of the SVM objective wrt params['w'] and params['b'].
+    w, b= params['w'], params['b']
+    scores= compute_scores(x,params)
+    m= 1- y*scores
+    m= m>0
+    n= np.size(y)
+    dw= 2*reg_lambda*w - (1/n)* (x.T@ (y*m))
+    db= - (1/n)* np.sum(m * y)
+    return {
+        'dw': dw,
+        'db': db
+    }
 
 # Step 8 - apply_update (not yet solved)
 # TODO: implement
